@@ -60,7 +60,6 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
 
 
 
-
     assert len(POP) == popsize, "POP has incorrect number of elements"
 
 
@@ -95,25 +94,19 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
 
             if random.uniform(0,1) < crossrate:
                 child1, child2 = parent1.crossover(parent2)
-                if random.uniform(0,1) < mutrate:
-                    child1 = child1.mutate(mutrate)
-                if random.uniform(0,1) < mutrate:
-                    child2 = child2.mutate(mutrate)
-
-                new_children.append(child1)
-                new_children.append(child2)
-
-
             else:
                 child1, child2 = parent1, parent2
-                if random.uniform(0,1) < mutrate:
-                    child1 = child1.mutate(mutrate)
-                    new_children.append(child1)
 
-                if random.uniform(0,1) < mutrate:
-                    child2 = child2.mutate(mutrate)
-                    new_children.append(child2)
+            if random.uniform(0,1) < mutrate:
+                child1 = child1.mutate(mutrate)
+            if random.uniform(0,1) < mutrate:
+                child2 = child2.mutate(mutrate)
 
+            EVALS += int(child1 != parent1 and child1 != parent2)
+            EVALS += int(child2 != parent1 and child2 != parent2)
+
+            new_children.append(child1)
+            new_children.append(child2)
 
             child_POP.append(child1)
             child_POP.append(child2)
@@ -139,7 +132,6 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
             # f.write("\t")
             f.write(str(FITNESS_MAP[new]))
             f.write("\n")
-            EVALS += 1
             if EVALS == EVAL_LIMIT:
                 break 
 
