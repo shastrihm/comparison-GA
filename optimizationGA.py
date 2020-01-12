@@ -6,6 +6,7 @@ Genetic Algorithm for optimization of scalar functions with vector input.
 """
 
 from chromosome import *
+import os
 import math
 
 def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=min):
@@ -27,7 +28,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
     S -- selection strategy = E  
     key -- min for function minimization and max for function maximization 
     """
-    
+
     assert popsize > 0, "popsize is not positive"
     assert 0 <= mutrate and mutrate <= 1, "invalid mutation rate"
     assert 0 <= crossrate and crossrate <= 1, "invalid crossover rate"
@@ -40,8 +41,8 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
 
     print(key.__name__.upper() + "IMIZING " + str(fn).upper() + " (" + REP.get_name() + ")")
 
-    
-    f = open("caruana_data" + "\\" + file + ".txt", 'w')
+
+    f = open(os.path.join("caruana_data", file + ".txt"), 'w')
 
     # Initialize random population
     EVAL_LIMIT = 5000
@@ -57,8 +58,8 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
         chrom = Chromosome(REP, vec)
         POP.append(chrom)
 
-    
-    
+
+
 
     assert len(POP) == popsize, "POP has incorrect number of elements"
 
@@ -91,7 +92,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
         new_children = []  # new individuals, not parents that propogate forward without crossover or mutation      
         for i in range(popsize//2):
             parent1, parent2 = wheel_selection(POP, FITNESS_MAP, f_prime, key)
-            
+
             if random.uniform(0,1) < crossrate:
                 child1, child2 = parent1.crossover(parent2)
                 if random.uniform(0,1) < mutrate:
@@ -147,7 +148,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
 
         best = key(best, key(FITNESS_MAP.values()))
         print(best)
-    
+
     print("All " + str(EVALS) + " fitness evals completed")
 
 
