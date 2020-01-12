@@ -2,6 +2,7 @@
 Computes statistics from a text file
 """
 import numpy
+import os
 
 def analyze(fnames):
     """
@@ -18,5 +19,5 @@ def analyze(fnames):
 NUM_RUNS = 10
 rep = "BRG" # change to "BIN" for binary stats
 for f in range(1,6):
-    fnames = ["caruana_data" + "\\" + "f" + str(f) + "_" + rep + "_T" + str(i) + ".txt" for i in range(1,NUM_RUNS+1)]
+    fnames = [os.path.join("caruana_data", "f" + str(f) + "_" + rep + "_T" + str(i) + ".txt") for i in range(1,NUM_RUNS+1)]
     print(analyze(fnames))
