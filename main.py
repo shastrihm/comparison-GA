@@ -9,7 +9,6 @@ Accordingly, this program optimizes a function using GAs and plots the Fitness v
 
 import testFunctions as tf
 import representation as rp 
-from plot import visualize, average_graph
 from optimizationGA import GA_SEARCH
 
 # Global constants
