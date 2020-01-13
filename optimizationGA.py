@@ -32,7 +32,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
     assert 0 <= crossrate and crossrate <= 1, "invalid crossover rate"
     assert gens > 0, "num of generations not positive"
 
-    print("Initializing...")
+#    print("Initializing...")
 
     # Initialize representation 
     REP = rep(interval)
@@ -61,7 +61,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
 
 
     # evaluate population 
-    print("Evolving...")
+#    print("Evolving...")
     # Fitness map is not performance value. It is just the evaluation of the objective function to be minimized.
     FITNESS_MAP = {chrom:chrom.eval_fitness(fn) for chrom in POP}
 
@@ -134,6 +134,6 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
 
 
         best = key(best, key(FITNESS_MAP.values()))
-        print(best)
+#        print(best)
 
     print("All " + str(EVALS) + " fitness evals completed")

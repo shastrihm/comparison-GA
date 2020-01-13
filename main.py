@@ -7,7 +7,9 @@ Accordingly, this program optimizes a function using GAs and plots the Fitness v
 """
 
 import testFunctions as tf
-import representation as rp 
+import representation as rp
+import multiprocessing as mp
+from pathos.multiprocessing import ProcessingPool as Pool
 from optimizationGA import GA_SEARCH
 
 # Global constants
@@ -26,7 +28,7 @@ p = 30   # population size
 
 g = 100 # no. of generations. Doesnt actually do anything because we run the GA until 5000 fitness evals.
 
-NUM_RUNS = 5
+NUM_RUNS = 1000
 # minimization
 key = min
 def main():
@@ -37,13 +39,26 @@ def main():
             # e.g. is literature says the search space is -5.12 <= x <= 5.12 with resolution \delta x = 0.01, input
             #       (-5.12, 5.11, 0.01) as the interval
 
+
+    pool = Pool(mp.cpu_count())
+    jobs = []
+
     funcs = [tf.f1, tf.f2, tf.f3, tf.f4, tf.f5]
     ranges = [(-5.12,5.11,0.01), (-2.048,2.047,0.001), (-5.12,5.11,0.01), (-1.28, 1.27, 0.01), (-65.536, 65.535, 0.001)]
-    for j in range(1, len(funcs)+1):
-        for i in range(1,NUM_RUNS+1):
-            GA_SEARCH(m, c, p, g, GRAY_CODE, "f" + str(j) + "_BRG_T" + str(i), funcs[j-1], ranges[j-1], min)
-            GA_SEARCH(m, c, p, g, BINARY_CODE, "f" + str(j) + "_BIN_T" + str(i), funcs[j-1], ranges[j-1], min)
+    search = lambda i,j : GA_SEARCH(m, c, p, g, GRAY_CODE, "f" + str(j) + "_BRG_T" + str(i), funcs[j-1], ranges[j-1], min)
 
+    for j in range(1, len(funcs)+1):
+        print(str(funcs[j-1]))
+        for i in range(1,NUM_RUNS+1):
+            job = pool.apipe(GA_SEARCH, m, c, p, g, GRAY_CODE, "f" + str(j) + "_BRG_T" + str(i), funcs[j-1], ranges[j-1], min)
+            jobs.append(job)
+            job = pool.apipe(GA_SEARCH, m, c, p, g, BINARY_CODE, "f" + str(j) + "_BIN_T" + str(i), funcs[j-1], ranges[j-1], min)
+            jobs.append(job)
+
+    for job in jobs:
+        job.get()
+#    pool.close()
+#    pool.join()
 
 if __name__ == "__main__":
     main()
