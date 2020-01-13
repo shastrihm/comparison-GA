@@ -38,7 +38,7 @@ class Chromosome:
                 self._vec += self._rep.to_bitstr(n)
         else:
             self._vec = vector
-        
+
     def to_real_vec(self):
         """
         converts bitstring sequence to a real-valued vector
@@ -91,12 +91,12 @@ class Chromosome:
         l = len(self._vec)
         mutindiv = []
         for i in range(l):
-            if random.uniform(0,1) < pm:
+            if random.uniform(0,1) <= pm:
                 mutindiv.append(flip(self._vec[i]))
             else:
                 mutindiv.append(self._vec[i])
-        if ''.join(mutindiv) == self._vec:
-            return self
+#        if ''.join(mutindiv) == self._vec:
+#            return self
         return Chromosome(self._rep, ''.join(mutindiv))
 
 
@@ -137,7 +137,7 @@ def wheel_selection(pop, fmap, f_prime, key):
         return numpy.random.choice(pop, 2)
     return numpy.random.choice(pop, 2, p = [i/s for i in w])
 
-    
+
 
 
 def tournament_selection(pop, k, fmap, key):

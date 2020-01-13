@@ -37,7 +37,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
     # Initialize representation 
     REP = rep(interval)
 
-    print(key.__name__.upper() + "IMIZING " + str(fn).upper() + " (" + REP.get_name() + ")")
+#    print(key.__name__.upper() + "IMIZING " + str(fn).upper() + " (" + REP.get_name() + ")")
 
 
     f = open(os.path.join("caruana_data", file + ".txt"), 'w')
@@ -84,13 +84,13 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
     # Evolve
     while EVALS < EVAL_LIMIT:
         curr_gen += 1
-        child_POP = []     
+        child_POP = []
         new_children = []  # new individuals not from previous generation. Child_pop is the entire population that will replace POP.
                             # new_children keeps track of the individuals that are not from previous generation
         for i in range(popsize//2):
             parent1, parent2 = wheel_selection(POP, FITNESS_MAP, f_prime, key)
 
-            if random.uniform(0,1) < crossrate:
+            if random.uniform(0,1) <= crossrate:
                 child1, child2 = parent1.crossover(parent2)
             else:
                 child1, child2 = parent1, parent2
@@ -136,4 +136,4 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
         best = key(best, key(FITNESS_MAP.values()))
 #        print(best)
 
-    print("All " + str(EVALS) + " fitness evals completed")
+#    print("All " + str(EVALS) + " fitness evals completed")

@@ -28,7 +28,7 @@ p = 30   # population size
 
 g = 100 # no. of generations. Doesnt actually do anything because we run the GA until 5000 fitness evals.
 
-NUM_RUNS = 1000
+NUM_RUNS = 50
 # minimization
 key = min
 def main():
