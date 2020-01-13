@@ -7,17 +7,34 @@ import os
 def analyze(fnames):
     """
     returns average, standard deviation of data points in fnames
+
+    # Table 3
     """
     lines = []
     for fname in fnames:
-        with open (fname, 'r') as f:
+        with open(fname, 'r') as f:
             lines += [float(line.rstrip()) for line in f]
 
     return [numpy.mean(lines), numpy.std(lines)]
 
+def best_sol_perf(fnames, key):
+    """
+    returns best sol performance 
+    """
+    sols = []
 
-NUM_RUNS = 10
-rep = "BRG" # change to "BIN" for binary stats
+    for fname in fnames:
+        lines = []
+        with open(fname, 'r') as f:
+            lines += [float(line.rstrip()) for line in f]
+            sols.append(key(lines))
+
+    return [numpy.mean(sols), numpy.std(sols)]
+
+
+
+NUM_RUNS = 5
+rep = "BIN" # change to "BIN" for binary stats
 for f in range(1,6):
     fnames = [os.path.join("caruana_data", "f" + str(f) + "_" + rep + "_T" + str(i) + ".txt") for i in range(1,NUM_RUNS+1)]
-    print(analyze(fnames))
+    print(analyze(fnames), best_sol_perf(fnames, min))

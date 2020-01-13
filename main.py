@@ -1,7 +1,6 @@
 """
 Author: Hrishee Shastri
 May 2019
-
 Runs the GA on De Jong's (1975) test functions with a number of trials and plots the result. 
 The main objective of this project is to compare different encoding schemes (e.g. gray vs binary) in optimization tasks.
 Accordingly, this program optimizes a function using GAs and plots the Fitness vs Generation curve for gray and binary on the same plot.

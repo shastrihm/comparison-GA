@@ -1,7 +1,6 @@
 """
 Author: Hrishee Shastri
 May 2019
-
 Genetic Algorithm for optimization of scalar functions with vector input. 
 """
 
@@ -12,7 +11,6 @@ import math
 def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=min):
     """
     Executes a genetic algorithm to optimize a mathematical function fn. Returns a pair (X,y) where X is an input vector and y is the optimized fn(X)
-
     mutrate -- mutation rate, between 0 and 1 inclusive
     crossrate -- crossover rate, between 0 and 1 inclusive
     popsize -- positive even integer population size to be maintained throughout iteration
@@ -59,7 +57,6 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
         POP.append(chrom)
 
 
-
     assert len(POP) == popsize, "POP has incorrect number of elements"
 
 
@@ -87,8 +84,9 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
     # Evolve
     while EVALS < EVAL_LIMIT:
         curr_gen += 1
-        child_POP = []
-        new_children = []  # new individuals, not parents that propogate forward without crossover or mutation      
+        child_POP = []     
+        new_children = []  # new individuals not from previous generation. Child_pop is the entire population that will replace POP.
+                            # new_children keeps track of the individuals that are not from previous generation
         for i in range(popsize//2):
             parent1, parent2 = wheel_selection(POP, FITNESS_MAP, f_prime, key)
 
@@ -97,16 +95,14 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
             else:
                 child1, child2 = parent1, parent2
 
-            if random.uniform(0,1) < mutrate:
-                child1 = child1.mutate(mutrate)
-            if random.uniform(0,1) < mutrate:
-                child2 = child2.mutate(mutrate)
+            child1 = child1.mutate(mutrate)
+            child2 = child2.mutate(mutrate)
 
-            EVALS += int(child1 != parent1 and child1 != parent2)
-            EVALS += int(child2 != parent1 and child2 != parent2)
+            if child1 != parent1 and child1 != parent2:
+                new_children.append(child1)
+            if child2 != parent1 and child2 != parent2:
+                new_children.append(child2)
 
-            new_children.append(child1)
-            new_children.append(child2)
 
             child_POP.append(child1)
             child_POP.append(child2)
@@ -132,18 +128,12 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
             # f.write("\t")
             f.write(str(FITNESS_MAP[new]))
             f.write("\n")
+            EVALS += 1
             if EVALS == EVAL_LIMIT:
                 break 
-
-
 
 
         best = key(best, key(FITNESS_MAP.values()))
         print(best)
 
     print("All " + str(EVALS) + " fitness evals completed")
-
-
-
-
-

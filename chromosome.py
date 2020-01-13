@@ -95,6 +95,8 @@ class Chromosome:
                 mutindiv.append(flip(self._vec[i]))
             else:
                 mutindiv.append(self._vec[i])
+        if ''.join(mutindiv) == self._vec:
+            return self
         return Chromosome(self._rep, ''.join(mutindiv))
 
 

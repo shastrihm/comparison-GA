@@ -54,7 +54,7 @@ f1 = TestFn("Parabola", lambda X: sum([x_i**2 for x_i in X]), dimension=3)
 f3 = TestFn("Step function", lambda X: sum([math.floor(X[i]) for i in range(len(X))]), dimension=5)
 
 # Quartic with noise in 30 dimensions
-f4 = TestFn("Quartic with noise", lambda X: sum([i*(X[i]**4) + random.gauss(mu=0,sigma=1) for i in range(len(X))]) , dimension=30)
+f4 = TestFn("Quartic with noise", lambda X: sum([i*(X[i]**4) for i in range(len(X))]) + random.gauss(mu=0,sigma=1), dimension=30)
 
 # Shekel's foxholes in 2 dimension
 def shekel(X):
