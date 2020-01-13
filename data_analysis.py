@@ -15,7 +15,7 @@ def analyze(fnames):
         with open(fname, 'r') as f:
             lines += [float(line.rstrip()) for line in f]
 
-    return [numpy.mean(lines), numpy.std(lines)]
+    return [round(numpy.mean(lines), 4), round(numpy.std(lines), 4)]
 
 def best_sol_perf(fnames, key):
     """
@@ -29,7 +29,7 @@ def best_sol_perf(fnames, key):
             lines += [float(line.rstrip()) for line in f]
             sols.append(key(lines))
 
-    return [numpy.mean(sols), numpy.std(sols)]
+    return [round(numpy.mean(sols), 4), round(numpy.std(sols), 4)]
 
 
 
