@@ -16,6 +16,8 @@ from optimizationGA import GA_SEARCH
 GRAY_CODE = rp.generateGrayRepresentation
 BINARY_CODE = rp.generateBinaryRepresentation
 CUSTOM_CODE = rp.generateCustomRepresentation  # custom encoding scheme. You can define it in representation.py 
+NGG_CODE = rp.generateNGG
+UBL_CODE = rp.generateUBL
 
 
 # Parameters suggested by Grefenstette (1986) for optimization of De Jong's (1975) five function test suite
@@ -50,6 +52,11 @@ def main():
     for j in range(1, len(funcs)+1):
         print(str(funcs[j-1]))
         for i in range(1,NUM_RUNS+1):
+            # job = pool.apipe(GA_SEARCH, m, c, p, g, NGG_CODE, "f" + str(j) + "_NGG_T" + str(i), funcs[j-1], ranges[j-1], min)
+            # jobs.append(job)
+            # job = pool.apipe(GA_SEARCH, m, c, p, g, UBL_CODE, "f" + str(j) + "_UBL_T" + str(i), funcs[j-1], ranges[j-1], min)
+            # jobs.append(job)
+
             job = pool.apipe(GA_SEARCH, m, c, p, g, GRAY_CODE, "f" + str(j) + "_BRG_T" + str(i), funcs[j-1], ranges[j-1], min)
             jobs.append(job)
             job = pool.apipe(GA_SEARCH, m, c, p, g, BINARY_CODE, "f" + str(j) + "_BIN_T" + str(i), funcs[j-1], ranges[j-1], min)

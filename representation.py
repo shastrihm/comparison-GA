@@ -9,6 +9,7 @@ from sympy.combinatorics.graycode import GrayCode
 import math
 import random
 import itertools
+import pickle
 
 
 class Representation:
@@ -145,6 +146,43 @@ def generateBinaryRepresentation(interval, b = None):
 
     binRep = initializeEncodings(bc, interval)
     return Representation(binRep, "binary")
+
+def generateUBL(interval, b = None):
+    if b is None:
+        b = numBitsToEncodeInterval(interval)
+    if b == 10:
+        fname = "UBL_10.txt"
+    elif b == 12:
+        fname = "UBL_12.txt"
+    elif b == 8:
+        fname = "UBL_8.txt"
+    elif b == 17:
+        fname = "UBL_17.txt"
+    else:
+        raise ValueError("interval does not support any of the precomputed UBL reps. May need to add")
+    with open(fname, 'rb') as f:
+        uc = pickle.load(f)
+
+    return Representation(initializeEncodings(uc, interval), "UBL")
+
+def generateNGG(interval, b = None):
+    if b is None:
+        b = numBitsToEncodeInterval(interval)
+    if b == 10:
+        fname = "NGG_10.txt"
+    elif b == 12:
+        fname = "NGG_12.txt"
+    elif b == 8:
+        fname = "NGG_8.txt"
+    elif b == 17:
+        fname = "NGG_17.txt"
+    else:
+        raise ValueError("interval does not support any of the precomputed NGG reps. May need to add")
+    with open(fname, 'rb') as f:
+        gc = pickle.load(f)
+
+    return Representation(initializeEncodings(gc, interval), "NGG")
+
 
 def generateModifiedBinaryRepresentation(interval):
     b = numBitsToEncodeInterval(interval)
@@ -326,4 +364,9 @@ def uneitanify(rep, name = ''):
         d[x] = rep[i]
     return Representation(d, name)
 
+# print(generateWorstRepresentation(17))
+
+# with open("UBL_8.txt", 'rb') as f:
+#     l = pickle.load(f)
+#     print(l)
 
