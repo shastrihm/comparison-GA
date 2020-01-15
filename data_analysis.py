@@ -34,7 +34,9 @@ def best_sol_perf(fnames, key):
 
 
 NUM_RUNS = 5
-rep = "BIN" # change to "BIN" for binary stats
-for f in range(1,6):
-    fnames = [os.path.join("caruana_data", "f" + str(f) + "_" + rep + "_T" + str(i) + ".txt") for i in range(1,NUM_RUNS+1)]
-    print(analyze(fnames), best_sol_perf(fnames, min))
+reps = ["BIN", "BRG", "UBL", "NGG"]
+for rep in reps:
+    for f in range(1,6):
+        fnames = [os.path.join("caruana_data", "f" + str(f) + "_" + rep + "_T" + str(i) + ".txt") for i in range(1,NUM_RUNS+1)]
+        print(rep, ' f' + str(f))
+        print(analyze(fnames), best_sol_perf(fnames, min))
