@@ -33,7 +33,7 @@ def best_sol_perf(fnames, key):
 
 
 
-NUM_RUNS = 5
+NUM_RUNS = 1000
 reps = ["BIN", "BRG", "UBL", "NGG"]
 for rep in reps:
     for f in range(1,6):
