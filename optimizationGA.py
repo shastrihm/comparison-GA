@@ -41,6 +41,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
 
 
     f = open(os.path.join("caruana_data", file + ".txt"), 'w')
+    g = open(os.path.join("caruana_data", file + "best_sol" + ".txt"), 'w')
 
     # Initialize random population
     EVAL_LIMIT = 5000
@@ -80,7 +81,7 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
         f.write("\n")
         EVALS += 1
 
-
+    g.write(str(key(FITNESS_MAP.values())) + "\n")
     # Evolve
     while EVALS < EVAL_LIMIT:
         curr_gen += 1
@@ -132,8 +133,6 @@ def GA_SEARCH(mutrate, crossrate, popsize, gens, rep, file, fn, interval, key=mi
             if EVALS == EVAL_LIMIT:
                 break 
 
-
-        best = key(best, key(FITNESS_MAP.values()))
-#        print(best)
+        g.write(str(key(FITNESS_MAP.values())) + "\n")
 
 #    print("All " + str(EVALS) + " fitness evals completed")

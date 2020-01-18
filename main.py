@@ -30,7 +30,7 @@ p = 30   # population size
 
 g = 100 # no. of generations. Doesnt actually do anything because we run the GA until 5000 fitness evals.
 
-NUM_RUNS = 50
+NUM_RUNS = 1000
 # minimization
 key = min
 def main():
@@ -52,10 +52,10 @@ def main():
     for j in range(1, len(funcs)+1):
         print(str(funcs[j-1]))
         for i in range(1,NUM_RUNS+1):
-            # job = pool.apipe(GA_SEARCH, m, c, p, g, NGG_CODE, "f" + str(j) + "_NGG_T" + str(i), funcs[j-1], ranges[j-1], min)
-            # jobs.append(job)
-            # job = pool.apipe(GA_SEARCH, m, c, p, g, UBL_CODE, "f" + str(j) + "_UBL_T" + str(i), funcs[j-1], ranges[j-1], min)
-            # jobs.append(job)
+            job = pool.apipe(GA_SEARCH, m, c, p, g, NGG_CODE, "f" + str(j) + "_NGG_T" + str(i), funcs[j-1], ranges[j-1], min)
+            jobs.append(job)
+            job = pool.apipe(GA_SEARCH, m, c, p, g, UBL_CODE, "f" + str(j) + "_UBL_T" + str(i), funcs[j-1], ranges[j-1], min)
+            jobs.append(job)
 
             job = pool.apipe(GA_SEARCH, m, c, p, g, GRAY_CODE, "f" + str(j) + "_BRG_T" + str(i), funcs[j-1], ranges[j-1], min)
             jobs.append(job)
