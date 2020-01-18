@@ -45,7 +45,7 @@ def best_sol_perf(fnames, key, out_fname):
     # i         sols[i]
 
     f = open(out_fname, 'w')
-    f.write("Eval no." + "\t" + "mean best sol" + "\n")
+    f.write("# Eval no." + "\t" + "mean best sol" + "\n")
     for i in range(len(sols)):
         f.write(str(i) + "\t" + str(sols[i]) + "\n")
 
@@ -55,13 +55,14 @@ def best_sol_perf(fnames, key, out_fname):
 
 
 
-NUM_RUNS = 1000
+NUM_RUNS = 3000
 reps = ["BIN", "BRG", "UBL", "NGG"]
 for rep in reps:
     for f in range(1,6):
         fnames1 = [os.path.join("caruana_data", "f" + str(f) + "_" + rep + "_T" + str(i) + ".txt") for i in range(1,NUM_RUNS+1)]
         fnames2 = [os.path.join("caruana_data", "f" + str(f) + "_" + rep + "_T" + str(i) + "best_sol.txt") for i in range(1,NUM_RUNS+1)]
         print(rep, ' f' + str(f))
+        print(analyze(fnames1))
         best_sol_perf(fnames2, min, rep + "_f" + str(f) + ".dat")
 
 
